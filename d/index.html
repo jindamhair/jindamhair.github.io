@@ -13,23 +13,23 @@
     <script type="text/javascript">
         window.onload = function () {
             // 1) 현재 경로와 쿼리 파라미터 파싱
-            var path = window.location.pathname;  // "/designer"
+            var path = window.location.pathname;  // "/d"
             var params = new URLSearchParams(window.location.search);
-            var email = params.get('email'); // "mickyland1990@gmail.com"
+            var email = params.get('e'); // "mickyland1990@gmail.com"
             
             console.log('▶︎▶︎▶︎ path', path);
             console.log('▶︎▶︎▶︎ params', params);
             console.log('▶︎▶︎▶︎ email', email);
 
-            // 2) /designer 경로 + email 파라미터가 있을 때 → 앱 딥링크 호출
-            if (path === '/designer' && email) {
-                // (A) 앱 스킴 예시: jindamhair://designer?email=…
-                var appScheme = 'jindamhair://designer?email=' + encodeURIComponent(email);
+            // 2) /d 경로 + e 파라미터가 있을 때 → 앱 딥링크 호출
+            if (path === '/d' && email) {
+                // (A) 앱 스킴 예시: jindamhair://d?e=…
+                var appScheme = 'jindamhair://d?e=' + encodeURIComponent(email);
 
-                // (B) Universal/App Link 예시: https://jindamhair.github.io/designer?email=…
+                // (B) Universal/App Link 예시: https://jindamhair.github.io/d?e=…
                 //    iOS Universal Link나 Android App Link로도 동작하게 하려면
                 //    도메인에 대한 Associated Domains / assetlinks.json 설정이 필요합니다.
-                var universalLink = window.location.origin + '/designer?email=' + encodeURIComponent(email);
+                var universalLink = window.location.origin + '/d?e=' + encodeURIComponent(email);
 
                 // 먼저 앱 스킴으로 시도
                 window.location = appScheme;
