@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Your Website Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript">
+        window.onload = function () {
+            // 1) 현재 경로와 쿼리 파라미터 파싱
+            var path = window.location.pathname;                    // e.g. "/designer"
+            var params = new URLSearchParams(window.location.search);
+            var email = params.get('email');                        // e.g. "mickyland1990@gmail.com"
+
+            // 2) /designer 경로 + email 파라미터가 있을 때 → 앱 딥링크 호출
+            if (path === '/designer' && email) {
+                // (A) 앱 스킴 예시: jindamhair://designer?email=…
+                var appScheme = 'jindamhair://designer?email=' + encodeURIComponent(email);
+
+                // (B) Universal/App Link 예시: https://jindamhair.github.io/designer?email=…
+                //    iOS Universal Link나 Android App Link로도 동작하게 하려면
+                //    도메인에 대한 Associated Domains / assetlinks.json 설정이 필요합니다.
+                var universalLink = window.location.origin + '/designer?email=' + encodeURIComponent(email);
+
+                // 먼저 앱 스킴으로 시도
+                window.location = appScheme;
+
+                // (선택) 1초 뒤에도 앱이 열리지 않으면, universalLink 로 재시도 or 스토어로 폴백
+                setTimeout(function () {
+                    // 스토어 redirect 로 바꾸고 싶으면 아래 두 줄 주석 해제
+                    // if (/android/i.test(navigator.userAgent)) {
+                    //   location.href = "https://play.google.com/store/apps/details?id=com.flynnapps.jindamhair";
+                    // } else if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+                    //   location.href = "https://apps.apple.com/app/1619262794";
+                    // }
+
+                    // Universal Link 로 재시도
+                    window.location = universalLink;
+                }, 1000);
+
+                return;  // 이 뒤 코드는 실행하지 않음
+            }
+
+            // 3) /designer 이외의 일반 접근자는 앱스토어로 보내기
+            var isAndroid = /android/i.test(navigator.userAgent);
+            var isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isAndroid) {
+                location.href = "https://play.google.com/store/apps/details?id=com.flynnapps.jindamhair";
+            } else if (isiOS) {
+                location.href = "https://apps.apple.com/app/1619262794";
+            } else {
+                console.log('not android & ios');
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <h1>AppLink Test</h1>
+    <p>이제 <code>https://jindamhair.github.io/designer?email=mickyland1990@gmail.com</code> 으로 접근하면<br>
+        앱이 설치돼 있으면 바로 앱으로, 없으면 1초 뒤 Universal Link → 스토어로 리다이렉트됩니다.</p>
+</body>
+
+</html>
