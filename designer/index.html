@@ -2,14 +2,24 @@
 <html>
 
 <head>
-    <title>Your Website Title</title>
+    <title>진담헤어</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <h1>안녕하세요.</h1>
+    <h1>진담헤어입니다.</h1>
+    
     <script type="text/javascript">
         window.onload = function () {
             // 1) 현재 경로와 쿼리 파라미터 파싱
-            var path = window.location.pathname;                    // e.g. "/designer"
+            var path = window.location.pathname;  // "/designer"
             var params = new URLSearchParams(window.location.search);
-            var email = params.get('email');                        // e.g. "mickyland1990@gmail.com"
+            var email = params.get('email'); // "mickyland1990@gmail.com"
+            
+            console.log('▶︎▶︎▶︎ path', path);
+            console.log('▶︎▶︎▶︎ params', params);
+            console.log('▶︎▶︎▶︎ email', email);
 
             // 2) /designer 경로 + email 파라미터가 있을 때 → 앱 딥링크 호출
             if (path === '/designer' && email) {
@@ -52,12 +62,6 @@
             }
         }
     </script>
-</head>
-
-<body>
-    <h1>AppLink Test</h1>
-    <p>이제 <code>https://jindamhair.github.io/designer?email=mickyland1990@gmail.com</code> 으로 접근하면<br>
-        앱이 설치돼 있으면 바로 앱으로, 없으면 1초 뒤 Universal Link → 스토어로 리다이렉트됩니다.</p>
 </body>
 
 </html>
